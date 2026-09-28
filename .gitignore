@@ -1,0 +1,19 @@
+# Dependencies
+node_modules/
+studio/node_modules/
+
+# Environment files
+.env
+.env.*
+studio/.env
+studio/.env.*
+
+# Build/cache files
+dist/
+.cache/
+.sanity/
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/

@@ -8,8 +8,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const SANITY_DATASET = "production";
     const SANITY_API_VERSION = "2026-09-28";
 
+    // Use Sanity's CDN for faster delivery of public content.
     const SANITY_BASE_URL =
-        `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}`;
+        `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}`;
 
 
     /* ========================================
@@ -203,6 +204,23 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /*
+     * Request an appropriately sized image from
+     * Sanity's image CDN instead of downloading
+     * the full original image.
+     */
+    function optimiseSanityImage(url, width = 900) {
+
+        if (!url) return "";
+
+        const separator =
+            url.includes("?") ? "&" : "?";
+
+        return `${url}${separator}w=${width}&auto=format&q=80`;
+
+    }
+
+
     /* ========================================
        SANITY QUERY
        ======================================== */
@@ -234,9 +252,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const response = await fetch(url);
 
         if (!response.ok) {
+
             throw new Error(
                 `Sanity request failed: ${response.status}`
             );
+
         }
 
         const data = await response.json();
@@ -270,41 +290,73 @@ document.addEventListener("DOMContentLoaded", () => {
         featuredSection.style.display = "";
 
 
-        const title = escapeHTML(article.title);
-        const summary = escapeHTML(article.summary);
-        const category = escapeHTML(
-            formatCategory(article.category)
-        );
+        const title =
+            escapeHTML(article.title);
 
-        const slug = articleURL(article.slug);
+        const summary =
+            escapeHTML(article.summary);
 
-        const imageUrl = article.imageUrl
-            ? escapeHTML(article.imageUrl)
-            : "";
+        const category =
+            escapeHTML(
+                formatCategory(article.category)
+            );
 
-        const imageAlt = escapeHTML(
-            article.imageAlt ||
-            article.title ||
-            "Byramold Insight"
-        );
-
-        const date = escapeHTML(
-            formatDate(article.publishedAt)
-        );
+        const slug =
+            articleURL(article.slug);
 
 
+        /*
+         * Featured image receives a larger image
+         * because it is displayed prominently.
+         */
+        const imageUrl =
+            article.imageUrl
+                ? escapeHTML(
+                    optimiseSanityImage(
+                        article.imageUrl,
+                        1200
+                    )
+                )
+                : "";
+
+
+        const imageAlt =
+            escapeHTML(
+                article.imageAlt ||
+                article.title ||
+                "Byramold Insight"
+            );
+
+
+        const date =
+            escapeHTML(
+                formatDate(article.publishedAt)
+            );
+
+
+        /*
+         * The featured image is above the fold,
+         * so load it eagerly and give it priority.
+         */
         const imageMarkup = imageUrl
             ? `
                 <div class="featured-image">
+
                     <img
                         src="${imageUrl}"
                         alt="${imageAlt}"
-                        loading="lazy">
+                        loading="eager"
+                        fetchpriority="high">
+
                 </div>
             `
             : `
                 <div class="featured-image insight-placeholder">
-                    <span>BYRAMOLD</span>
+
+                    <span>
+                        BYRAMOLD
+                    </span>
+
                 </div>
             `;
 
@@ -331,13 +383,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 </div>
 
+
                 <h2>
                     ${title}
                 </h2>
 
+
                 <p>
                     ${summary}
                 </p>
+
 
                 <a
                     href="${slug}"
@@ -352,6 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
 
             </div>
+
         `;
 
     }
@@ -386,10 +442,21 @@ document.addEventListener("DOMContentLoaded", () => {
         const url =
             articleURL(article.slug);
 
+
+        /*
+         * Cards use a smaller image than the
+         * featured article to reduce bandwidth.
+         */
         const imageUrl =
             article.imageUrl
-                ? escapeHTML(article.imageUrl)
+                ? escapeHTML(
+                    optimiseSanityImage(
+                        article.imageUrl,
+                        700
+                    )
+                )
                 : "";
+
 
         const imageAlt =
             escapeHTML(
@@ -399,6 +466,11 @@ document.addEventListener("DOMContentLoaded", () => {
             );
 
 
+        /*
+         * Regular article cards remain lazy-loaded.
+         * Images are only downloaded as they approach
+         * the user's viewport.
+         */
         const imageMarkup = imageUrl
             ? `
                 <a
@@ -408,7 +480,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     <img
                         src="${imageUrl}"
                         alt="${imageAlt}"
-                        loading="lazy">
+                        loading="lazy"
+                        decoding="async">
 
                 </a>
             `
@@ -435,6 +508,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     ${category}
                 </span>
 
+
                 <h3>
 
                     <a href="${url}">
@@ -443,9 +517,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 </h3>
 
+
                 <p>
                     ${summary}
                 </p>
+
 
                 <a
                     href="${url}"
@@ -460,6 +536,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </a>
 
             </div>
+
         `;
 
 
@@ -624,6 +701,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const articles =
                 await getInsights();
 
+
             renderInsights(articles);
 
         } catch (error) {
@@ -640,8 +718,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             if (featuredSection) {
+
                 featuredSection.style.display =
                     "none";
+
             }
 
 
@@ -649,6 +729,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 emptyState.style.display =
                     "block";
+
 
                 const heading =
                     emptyState.querySelector("h3");
@@ -658,14 +739,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 if (heading) {
+
                     heading.textContent =
                         "Insights Unavailable";
+
                 }
 
 
                 if (paragraph) {
+
                     paragraph.textContent =
                         "We couldn't load the latest insights right now. Please try again shortly.";
+
                 }
 
             }
@@ -683,8 +768,6 @@ document.addEventListener("DOMContentLoaded", () => {
        ======================================== */
 
     if (whatsappButton) {
-
-        
 
         const whatsappNumber =
             "254704317265";
@@ -705,8 +788,10 @@ document.addEventListener("DOMContentLoaded", () => {
        ======================================== */
 
     if (currentYear) {
+
         currentYear.textContent =
             new Date().getFullYear();
+
     }
 
 });

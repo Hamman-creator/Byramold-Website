@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const SANITY_API_VERSION = "2026-09-28";
 
     const SANITY_BASE_URL =
-        `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}`;
+        `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}`;
 
 
     /* ========================================
@@ -215,18 +215,6 @@ document.addEventListener("DOMContentLoaded", () => {
        HELPERS
        ======================================== */
 
-    function escapeHTML(value = "") {
-
-        return String(value)
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-
-    }
-
-
     function formatCategory(category = "") {
 
         const categories = {
@@ -273,6 +261,33 @@ document.addEventListener("DOMContentLoaded", () => {
         return (
             "article.html?slug=" +
             encodeURIComponent(articleSlug)
+        );
+
+    }
+
+
+    function optimiseSanityImage(
+        url,
+        width = 1200
+    ) {
+
+        if (!url) {
+            return "";
+        }
+
+        if (!url.includes("cdn.sanity.io")) {
+            return url;
+        }
+
+        const separator =
+            url.includes("?")
+                ? "&"
+                : "?";
+
+        return (
+            url +
+            separator +
+            `w=${width}&auto=format&q=80`
         );
 
     }
@@ -402,6 +417,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function renderPortableText(blocks) {
 
+        if (!articleBody) {
+            return;
+        }
+
         if (!Array.isArray(blocks)) {
             return;
         }
@@ -447,13 +466,19 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.createElement("img");
 
                 image.src =
-                    block.imageUrl;
+                    optimiseSanityImage(
+                        block.imageUrl,
+                        1000
+                    );
 
                 image.alt =
                     block.alt || "";
 
                 image.loading =
                     "lazy";
+
+                image.decoding =
+                    "async";
 
 
                 figure.appendChild(image);
@@ -555,14 +580,20 @@ document.addEventListener("DOMContentLoaded", () => {
             switch (block.style) {
 
                 case "h2":
+
                     element =
                         document.createElement("h2");
+
                     break;
 
+
                 case "h3":
+
                     element =
                         document.createElement("h3");
+
                     break;
+
 
                 case "blockquote":
 
@@ -596,18 +627,16 @@ document.addEventListener("DOMContentLoaded", () => {
                     element =
                         document.createElement("p");
 
-                    /*
-                     * Give the first normal
-                     * paragraph the lead style.
-                     */
 
                     if (
                         index === 0 ||
                         !articleBody.querySelector("p")
                     ) {
+
                         element.classList.add(
                             "article-lead"
                         );
+
                     }
 
             }
@@ -762,12 +791,57 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
+        const category =
+            formatCategory(
+                article.category
+            );
+
+
+        const title =
+            article.title ||
+            "Byramold Insight";
+
+
+        const seoTitle =
+            article.seoTitle ||
+            title;
+
+
+        const description =
+            article.seoDescription ||
+            article.summary ||
+            "Insights and perspectives from Byramold Investments Ltd.";
+
+
+        const author =
+            article.author ||
+            "Byramold Investments Ltd";
+
+
+        const canonicalURL =
+            "https://byramoldinvestments.com/article.html?slug=" +
+            encodeURIComponent(
+                article.slug
+            );
+
+
+        const defaultImage =
+            "https://byramoldinvestments.com/images/Byramold_Logo-removebg-preview.png";
+
+
+        const socialImage =
+            article.imageUrl ||
+            defaultImage;
+
+
+        /* ========================================
+           DISPLAY CONTENT
+           ======================================== */
+
         if (articleCategory) {
 
             articleCategory.textContent =
-                formatCategory(
-                    article.category
-                );
+                category;
 
         }
 
@@ -785,7 +859,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (articleTitle) {
 
             articleTitle.textContent =
-                article.title || "";
+                title;
 
         }
 
@@ -793,7 +867,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (articleSummary) {
 
             articleSummary.textContent =
-                article.summary || "";
+                article.summary ||
+                description;
 
         }
 
@@ -801,8 +876,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (articleAuthor) {
 
             articleAuthor.textContent =
-                article.author ||
-                "Byramold Investments Ltd";
+                author;
 
         }
 
@@ -812,12 +886,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (article.imageUrl) {
 
                 articleImage.src =
-                    article.imageUrl;
+                    optimiseSanityImage(
+                        article.imageUrl,
+                        1400
+                    );
 
                 articleImage.alt =
                     article.imageAlt ||
-                    article.title ||
-                    "Byramold Insight";
+                    title;
+
+                articleImage.decoding =
+                    "async";
 
             } else {
 
@@ -827,8 +906,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     );
 
                 if (imageSection) {
+
                     imageSection.style.display =
                         "none";
+
                 }
 
             }
@@ -841,18 +922,17 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
 
-        /*
-         * Browser title
-         */
+        /* ========================================
+           PAGE TITLE
+           ======================================== */
 
         document.title =
-            `${article.seoTitle || article.title}` +
-            " | Byramold Investments Ltd";
+            `${seoTitle} | Byramold Investments Ltd`;
 
 
-        /*
-         * Meta description
-         */
+        /* ========================================
+           META DESCRIPTION
+           ======================================== */
 
         const metaDescription =
             document.getElementById(
@@ -864,10 +944,317 @@ document.addEventListener("DOMContentLoaded", () => {
 
             metaDescription.setAttribute(
                 "content",
-                article.seoDescription ||
-                article.summary ||
-                "Insights from Byramold Investments Ltd."
+                description
             );
+
+        }
+
+
+        /* ========================================
+           CANONICAL URL
+           ======================================== */
+
+        const canonical =
+            document.getElementById(
+                "canonical-url"
+            );
+
+
+        if (canonical) {
+
+            canonical.setAttribute(
+                "href",
+                canonicalURL
+            );
+
+        }
+
+
+        /* ========================================
+           OPEN GRAPH
+           ======================================== */
+
+        const ogTitle =
+            document.getElementById(
+                "og-title"
+            );
+
+        const ogDescription =
+            document.getElementById(
+                "og-description"
+            );
+
+        const ogURL =
+            document.getElementById(
+                "og-url"
+            );
+
+        const ogImage =
+            document.getElementById(
+                "og-image"
+            );
+
+        const ogImageAlt =
+            document.getElementById(
+                "og-image-alt"
+            );
+
+        const publishedTime =
+            document.getElementById(
+                "article-published-time"
+            );
+
+        const articleSectionMeta =
+            document.getElementById(
+                "article-section-meta"
+            );
+
+
+        if (ogTitle) {
+
+            ogTitle.setAttribute(
+                "content",
+                seoTitle
+            );
+
+        }
+
+
+        if (ogDescription) {
+
+            ogDescription.setAttribute(
+                "content",
+                description
+            );
+
+        }
+
+
+        if (ogURL) {
+
+            ogURL.setAttribute(
+                "content",
+                canonicalURL
+            );
+
+        }
+
+
+        if (ogImage) {
+
+            ogImage.setAttribute(
+                "content",
+                socialImage
+            );
+
+        }
+
+
+        if (ogImageAlt) {
+
+            ogImageAlt.setAttribute(
+                "content",
+                article.imageAlt ||
+                title
+            );
+
+        }
+
+
+        if (
+            publishedTime &&
+            article.publishedAt
+        ) {
+
+            publishedTime.setAttribute(
+                "content",
+                article.publishedAt
+            );
+
+        }
+
+
+        if (articleSectionMeta) {
+
+            articleSectionMeta.setAttribute(
+                "content",
+                category
+            );
+
+        }
+
+
+        /* ========================================
+           TWITTER / X
+           ======================================== */
+
+        const twitterTitle =
+            document.getElementById(
+                "twitter-title"
+            );
+
+        const twitterDescription =
+            document.getElementById(
+                "twitter-description"
+            );
+
+        const twitterImage =
+            document.getElementById(
+                "twitter-image"
+            );
+
+        const twitterImageAlt =
+            document.getElementById(
+                "twitter-image-alt"
+            );
+
+
+        if (twitterTitle) {
+
+            twitterTitle.setAttribute(
+                "content",
+                seoTitle
+            );
+
+        }
+
+
+        if (twitterDescription) {
+
+            twitterDescription.setAttribute(
+                "content",
+                description
+            );
+
+        }
+
+
+        if (twitterImage) {
+
+            twitterImage.setAttribute(
+                "content",
+                socialImage
+            );
+
+        }
+
+
+        if (twitterImageAlt) {
+
+            twitterImageAlt.setAttribute(
+                "content",
+                article.imageAlt ||
+                title
+            );
+
+        }
+
+
+        /* ========================================
+           ARTICLE STRUCTURED DATA
+           ======================================== */
+
+        const schemaElement =
+            document.getElementById(
+                "article-schema"
+            );
+
+
+        if (schemaElement) {
+
+            const articleSchema = {
+
+                "@context":
+                    "https://schema.org",
+
+                "@type":
+                    "Article",
+
+                headline:
+                    title,
+
+                description:
+                    description,
+
+                url:
+                    canonicalURL,
+
+                mainEntityOfPage: {
+
+                    "@type":
+                        "WebPage",
+
+                    "@id":
+                        canonicalURL
+
+                },
+
+                author: {
+
+                    "@type":
+                        "Organization",
+
+                    name:
+                        author
+
+                },
+
+                publisher: {
+
+                    "@type":
+                        "Organization",
+
+                    name:
+                        "Byramold Investments Ltd",
+
+                    url:
+                        "https://byramoldinvestments.com/",
+
+                    logo: {
+
+                        "@type":
+                            "ImageObject",
+
+                        url:
+                            "https://byramoldinvestments.com/images/Byramold_Logo-removebg-preview.png"
+
+                    }
+
+                }
+
+            };
+
+
+            if (article.publishedAt) {
+
+                articleSchema.datePublished =
+                    article.publishedAt;
+
+            }
+
+
+            if (article.imageUrl) {
+
+                articleSchema.image =
+                    [
+                        article.imageUrl
+                    ];
+
+            }
+
+
+            if (category) {
+
+                articleSchema.articleSection =
+                    category;
+
+            }
+
+
+            schemaElement.textContent =
+                JSON.stringify(
+                    articleSchema
+                );
 
         }
 
@@ -885,13 +1272,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         if (articleCategory) {
+
             articleCategory.textContent =
                 "Byramold Insights";
+
         }
 
 
         if (articleDate) {
-            articleDate.textContent = "";
+
+            articleDate.textContent =
+                "";
+
         }
 
 
@@ -913,7 +1305,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (articleBody) {
 
-            articleBody.innerHTML = "";
+            articleBody.innerHTML =
+                "";
 
             const paragraph =
                 document.createElement("p");
@@ -941,6 +1334,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         }
 
+
+        /*
+         * Prevent invalid/missing articles from
+         * being treated as normal indexable pages.
+         */
+
+        const robots =
+            document.querySelector(
+                'meta[name="robots"]'
+            );
+
+        if (robots) {
+
+            robots.setAttribute(
+                "content",
+                "noindex, follow"
+            );
+
+        }
+
     }
 
 
@@ -955,7 +1368,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-        relatedInsights.innerHTML = "";
+        relatedInsights.innerHTML =
+            "";
 
 
         if (!articles.length) {
@@ -965,12 +1379,14 @@ document.addEventListener("DOMContentLoaded", () => {
                     ".related-section"
                 );
 
+
             if (relatedSection) {
 
                 relatedSection.style.display =
                     "none";
 
             }
+
 
             return;
 
@@ -989,7 +1405,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const url =
-                articleURL(article.slug);
+                articleURL(
+                    article.slug
+                );
 
 
             let media;
@@ -998,19 +1416,27 @@ document.addEventListener("DOMContentLoaded", () => {
             if (article.imageUrl) {
 
                 media =
-                    document.createElement("a");
+                    document.createElement(
+                        "a"
+                    );
 
-                media.href = url;
+                media.href =
+                    url;
 
                 media.className =
                     "related-image";
 
 
                 const image =
-                    document.createElement("img");
+                    document.createElement(
+                        "img"
+                    );
 
                 image.src =
-                    article.imageUrl;
+                    optimiseSanityImage(
+                        article.imageUrl,
+                        700
+                    );
 
                 image.alt =
                     article.imageAlt ||
@@ -1020,39 +1446,54 @@ document.addEventListener("DOMContentLoaded", () => {
                 image.loading =
                     "lazy";
 
+                image.decoding =
+                    "async";
 
-                media.appendChild(image);
+
+                media.appendChild(
+                    image
+                );
 
             } else {
 
                 media =
-                    document.createElement("div");
+                    document.createElement(
+                        "div"
+                    );
 
                 media.className =
                     "related-placeholder";
 
 
                 const brand =
-                    document.createElement("span");
+                    document.createElement(
+                        "span"
+                    );
 
                 brand.textContent =
                     "BYRAMOLD";
 
 
-                media.appendChild(brand);
+                media.appendChild(
+                    brand
+                );
 
             }
 
 
             const content =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
             content.className =
                 "related-content";
 
 
             const category =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
             category.className =
                 "article-category";
@@ -1064,28 +1505,49 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const heading =
-                document.createElement("h3");
+                document.createElement(
+                    "h3"
+                );
 
 
             const link =
-                document.createElement("a");
+                document.createElement(
+                    "a"
+                );
 
-            link.href = url;
+            link.href =
+                url;
 
             link.textContent =
                 article.title;
 
 
-            heading.appendChild(link);
+            heading.appendChild(
+                link
+            );
 
 
-            content.appendChild(category);
-            content.appendChild(heading);
+            content.appendChild(
+                category
+            );
 
-            card.appendChild(media);
-            card.appendChild(content);
+            content.appendChild(
+                heading
+            );
 
-            relatedInsights.appendChild(card);
+
+            card.appendChild(
+                media
+            );
+
+            card.appendChild(
+                content
+            );
+
+
+            relatedInsights.appendChild(
+                card
+            );
 
         });
 
@@ -1109,7 +1571,9 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
 
             const article =
-                await getArticle(slug);
+                await getArticle(
+                    slug
+                );
 
 
             if (!article) {
@@ -1120,7 +1584,9 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
 
-            renderArticle(article);
+            renderArticle(
+                article
+            );
 
 
             const related =
@@ -1141,6 +1607,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 "Unable to load Byramold Insight:",
                 error
             );
+
 
             showNotFound();
 
@@ -1244,12 +1711,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (copyMessage) {
 
-                    setTimeout(() => {
+                    setTimeout(
+                        () => {
 
-                        copyMessage.textContent =
-                            "";
+                            copyMessage.textContent =
+                                "";
 
-                    }, 3000);
+                        },
+                        3000
+                    );
 
                 }
 
@@ -1265,13 +1735,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (whatsappButton) {
 
-        /*
-         * Replace with Byramold's official
-         * WhatsApp number when available.
-         */
-
         const whatsappNumber =
-            "254712345678";
+            "254704317265";
+
 
         const whatsappMessage =
             "Hello Byramold Investments, I would like to discuss an opportunity.";

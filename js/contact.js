@@ -29,6 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const formStatus =
         document.querySelector('#form-status');
 
+    const submitButton =
+        contactForm
+            ? contactForm.querySelector('.submit-button')
+            : null;
+
 
     /* ----------------------------------------
        HEADER
@@ -182,16 +187,18 @@ document.addEventListener('DOMContentLoaded', () => {
        ---------------------------------------- */
 
     /*
-       Replace this placeholder with
-       Byramold's actual WhatsApp number.
+       IMPORTANT:
+       Keep your actual Byramold WhatsApp
+       number here.
 
-       Example:
-       0712 345 678 becomes
-       254712345678
+       Format:
+       0712 345 678
+       becomes
+       254704317265
     */
 
     const whatsappNumber =
-        '254712345678';
+        '254704317265';
 
 
     const whatsappMessage =
@@ -203,14 +210,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     if (whatsappButton) {
+
         whatsappButton.href =
             whatsappURL;
+
     }
 
 
     if (contactWhatsapp) {
+
         contactWhatsapp.href =
             whatsappURL;
+
     }
 
 
@@ -222,18 +233,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         contactForm.addEventListener(
             'submit',
-            (event) => {
-
-                /*
-                   TEMPORARY:
-
-                   Prevent submission until
-                   FormSubmit / EmailJS or another
-                   form handler is connected.
-                */
+            async (event) => {
 
                 event.preventDefault();
 
+
+                /* --------------------------------
+                   VALIDATION
+                   -------------------------------- */
 
                 if (!contactForm.checkValidity()) {
 
@@ -244,13 +251,162 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
 
+                /* --------------------------------
+                   BUTTON STATE
+                   -------------------------------- */
+
+                const originalButtonHTML =
+                    submitButton
+                        ? submitButton.innerHTML
+                        : '';
+
+
+                if (submitButton) {
+
+                    submitButton.disabled = true;
+
+                    submitButton.textContent =
+                        'Sending...';
+
+                }
+
+
                 if (formStatus) {
 
                     formStatus.textContent =
-                        'The enquiry form is currently being configured. Please contact Byramold through WhatsApp or email in the meantime.';
+                        'Sending your enquiry...';
 
                     formStatus.className =
                         'form-status show info';
+
+                }
+
+
+                /* --------------------------------
+                   PREPARE FORM DATA
+                   -------------------------------- */
+
+                const formData =
+                    new FormData(contactForm);
+
+
+                /*
+                   FormSubmit uses the visitor's
+                   "email" field as Reply-To.
+                */
+
+                const visitorEmail =
+                    formData.get('email');
+
+
+                if (visitorEmail) {
+
+                    formData.set(
+                        '_replyto',
+                        visitorEmail
+                    );
+
+                }
+
+
+                try {
+
+
+                    /* --------------------------------
+                       SEND TO FORMSUBMIT
+                       -------------------------------- */
+
+                    const response =
+                        await fetch(
+                            'https://formsubmit.co/ajax/admin@byramoldinvestments.com',
+                            {
+                                method: 'POST',
+
+                                headers: {
+                                    'Accept':
+                                        'application/json'
+                                },
+
+                                body: formData
+                            }
+                        );
+
+
+                    const data =
+                        await response.json();
+
+
+                    /* --------------------------------
+                       SUCCESS
+                       -------------------------------- */
+
+                    if (response.ok) {
+
+                        if (formStatus) {
+
+                            formStatus.textContent =
+                                'Thank you. Your enquiry has been sent successfully. The Byramold Investments team will review it and get back to you.';
+
+                            formStatus.className =
+                                'form-status show success';
+
+                        }
+
+
+                        contactForm.reset();
+
+
+                    } else {
+
+
+                        throw new Error(
+                            data.message ||
+                            'Unable to send enquiry.'
+                        );
+
+                    }
+
+
+                } catch (error) {
+
+
+                    /* --------------------------------
+                       ERROR
+                       -------------------------------- */
+
+                    console.error(
+                        'Contact form error:',
+                        error
+                    );
+
+
+                    if (formStatus) {
+
+                        formStatus.textContent =
+                            'We could not send your enquiry at this time. Please try again or contact us directly at admin@byramoldinvestments.com.';
+
+                        formStatus.className =
+                            'form-status show error';
+
+                    }
+
+
+                } finally {
+
+
+                    /* --------------------------------
+                       RESTORE BUTTON
+                       -------------------------------- */
+
+                    if (submitButton) {
+
+                        submitButton.disabled =
+                            false;
+
+                        submitButton.innerHTML =
+                            originalButtonHTML;
+
+                    }
 
                 }
 

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -9,22 +10,160 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="description"
-        content="Learn about Byramold Investments Ltd, a Kenyan investment and holding company focused on Ownership, Production, and Trade.">
+
+    <!-- ========================================
+         PRIMARY SEO
+         ======================================== -->
 
     <title>
-        About Us | Byramold Investments Ltd
+        About Byramold Investments Ltd | Investment Company Kenya
     </title>
+
+    <meta
+        name="description"
+        content="Learn about Byramold Investments Ltd, a Kenyan investment and holding company focused on building long-term value through Ownership, Production and Trade.">
+
+    <meta
+        name="robots"
+        content="index, follow, max-image-preview:large">
+
+    <meta
+        name="author"
+        content="Byramold Investments Ltd">
+
+    <link
+        rel="canonical"
+        href="https://byramoldinvestments.com/about.html">
+
+
+    <!-- ========================================
+         OPEN GRAPH / SOCIAL SHARING
+         ======================================== -->
+
+    <meta
+        property="og:type"
+        content="website">
+
+    <meta
+        property="og:site_name"
+        content="Byramold Investments Ltd">
+
+    <meta
+        property="og:title"
+        content="About Byramold Investments Ltd | Building Long-Term Value">
+
+    <meta
+        property="og:description"
+        content="Discover Byramold Investments Ltd, a Kenyan investment and holding company building sustainable ventures through Ownership, Production and Trade.">
+
+    <meta
+        property="og:url"
+        content="https://byramoldinvestments.com/about.html">
+
+    <meta
+        property="og:image"
+        content="https://byramoldinvestments.com/images/Sorghum%20Image%207.jpeg">
+
+    <meta
+        property="og:image:alt"
+        content="Byramold Investments agricultural operations in Kenya">
+
+    <meta
+        property="og:locale"
+        content="en_KE">
+
+
+    <!-- ========================================
+         X / TWITTER SHARING
+         ======================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image">
+
+    <meta
+        name="twitter:title"
+        content="About Byramold Investments Ltd">
+
+    <meta
+        name="twitter:description"
+        content="A Kenyan investment and holding company building sustainable long-term value through Ownership, Production and Trade.">
+
+    <meta
+        name="twitter:image"
+        content="https://byramoldinvestments.com/images/Sorghum%20Image%207.jpeg">
+
+
+    <!-- ========================================
+         FAVICON
+         ======================================== -->
 
     <link
         rel="icon"
         type="image/png"
         href="images/Byramold_Logo-removebg-preview.png">
 
+
+    <!-- ========================================
+         STYLESHEET
+         ======================================== -->
+
     <link
         rel="stylesheet"
         href="css/about.css">
+
+
+    <!-- ========================================
+         STRUCTURED DATA
+         ======================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://byramoldinvestments.com/#organization",
+                "name": "Byramold Investments Ltd",
+                "url": "https://byramoldinvestments.com/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://byramoldinvestments.com/images/Byramold_Logo-removebg-preview.png"
+                },
+                "description": "Byramold Investments Ltd is a Kenyan investment and holding company focused on building long-term value through Ownership, Production and Trade.",
+                "email": "admin@byramoldinvestments.com",
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Kenya"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://byramoldinvestments.com/#website",
+                "url": "https://byramoldinvestments.com/",
+                "name": "Byramold Investments Ltd",
+                "publisher": {
+                    "@id": "https://byramoldinvestments.com/#organization"
+                },
+                "inLanguage": "en-KE"
+            },
+            {
+                "@type": "AboutPage",
+                "@id": "https://byramoldinvestments.com/about.html#webpage",
+                "url": "https://byramoldinvestments.com/about.html",
+                "name": "About Byramold Investments Ltd",
+                "isPartOf": {
+                    "@id": "https://byramoldinvestments.com/#website"
+                },
+                "about": {
+                    "@id": "https://byramoldinvestments.com/#organization"
+                },
+                "description": "Learn about Byramold Investments Ltd, its long-term investment philosophy, vision, mission and strategic pillars of Ownership, Production and Trade.",
+                "inLanguage": "en-KE"
+            }
+        ]
+    }
+    </script>
 
 </head>
 
@@ -47,7 +186,8 @@
 
                 <a
                     href="index.html"
-                    class="logo">
+                    class="logo"
+                    aria-label="Byramold Investments Ltd home">
 
                     <span class="logo-main">
                         BYRAMOLD
@@ -64,6 +204,7 @@
 
                 <nav
                     class="main-nav"
+                    id="main-navigation"
                     aria-label="Main navigation">
 
                     <a href="index.html">
@@ -81,8 +222,9 @@
                     </a>
 
                     <a href="partners.html">
-                        Partners & Investors
+                        Partners &amp; Investors
                     </a>
+
                     <a href="insight.html">
                         Insights
                     </a>
@@ -99,7 +241,9 @@
                 <a
                     href="contact.html"
                     class="nav-cta">
+
                     Let's Talk
+
                 </a>
 
 
@@ -216,8 +360,13 @@
                         <a
                             href="services.html"
                             class="text-link">
+
                             Discover What We Do
-                            <span aria-hidden="true">→</span>
+
+                            <span aria-hidden="true">
+                                →
+                            </span>
+
                         </a>
 
                     </div>
@@ -229,8 +378,9 @@
 
                         <img
                             src="images/Sorghum Image 7.jpeg"
-                            alt="Byramold Investments agricultural operations"
-                            loading="lazy">
+                            alt="Byramold Investments agricultural production operations in Kenya"
+                            loading="lazy"
+                            decoding="async">
 
                     </div>
 
@@ -586,13 +736,17 @@
                         <a
                             href="partners.html"
                             class="btn btn-primary">
+
                             Explore Partnerships
+
                         </a>
 
                         <a
                             href="contact.html"
                             class="btn btn-outline-light">
+
                             Contact Us
+
                         </a>
 
                     </div>
@@ -626,7 +780,8 @@
 
                     <a
                         href="index.html"
-                        class="logo footer-logo">
+                        class="logo footer-logo"
+                        aria-label="Byramold Investments Ltd home">
 
                         <span class="logo-main">
                             BYRAMOLD
@@ -662,7 +817,11 @@
                     </a>
 
                     <a href="partners.html">
-                        Partners & Investors
+                        Partners &amp; Investors
+                    </a>
+
+                    <a href="insight.html">
+                        Insights
                     </a>
 
                     <a href="contact.html">
@@ -680,8 +839,8 @@
                         Get In Touch
                     </h3>
 
-                    <a href="mailto:info@byramold.com">
-                        info@byramold.com
+                    <a href="mailto:admin@byramoldinvestments.com">
+                        admin@byramoldinvestments.com
                     </a>
 
                     <a href="contact.html">
@@ -697,7 +856,10 @@
             <div class="footer-bottom">
 
                 <p>
-                    © <span id="current-year">2026</span>
+                    ©
+                    <span id="current-year">
+                        2026
+                    </span>
                     Byramold Investments Ltd.
                     All rights reserved.
                 </p>
@@ -712,37 +874,40 @@
         </div>
 
     </footer>
-<!-- ========================================
-     FLOATING WHATSAPP BUTTON
-     ======================================== -->
 
-<a
-    href="#"
-    class="whatsapp-float"
-    id="whatsapp-button"
-    target="_blank"
-    rel="noopener noreferrer"
-    aria-label="Chat with Byramold Investments on WhatsApp">
 
-    <svg
-        viewBox="0 0 32 32"
-        aria-hidden="true">
 
-        <path
-            d="M16.04 2.003A13.94 13.94 0 0 0 4.13 23.18L2 30l7.01-2.06A13.97 13.97 0 1 0 16.04 2.003zm0 25.45a11.43 11.43 0 0 1-5.83-1.59l-.42-.25-4.16 1.22 1.25-4.05-.27-.42a11.45 11.45 0 1 1 9.43 5.09zm6.28-8.57c-.34-.17-2.03-1-2.35-1.12-.31-.12-.54-.17-.77.17-.23.34-.89 1.12-1.09 1.35-.2.23-.4.26-.74.09-.34-.17-1.45-.53-2.76-1.7a10.3 10.3 0 0 1-1.91-2.38c-.2-.34-.02-.52.15-.69.15-.15.34-.4.51-.6.17-.2.23-.34.34-.57.12-.23.06-.43-.03-.6-.09-.17-.77-1.86-1.06-2.55-.28-.67-.56-.58-.77-.59h-.66c-.23 0-.6.09-.91.43-.31.34-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.46.57 1.96.73.82.26 1.57.22 2.16.13.66-.1 2.03-.83 2.32-1.63.29-.8.29-1.49.2-1.63-.08-.14-.31-.23-.65-.4z">
-        </path>
+    <!-- ========================================
+         FLOATING WHATSAPP BUTTON
+         ======================================== -->
 
-    </svg>
+    <a
+        href="#"
+        class="whatsapp-float"
+        id="whatsapp-button"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Chat with Byramold Investments on WhatsApp">
 
-    <span class="whatsapp-tooltip">
-        Chat with us
-    </span>
+        <svg
+            viewBox="0 0 32 32"
+            aria-hidden="true">
 
-</a>
+            <path
+                d="M16.04 2.003A13.94 13.94 0 0 0 4.13 23.18L2 30l7.01-2.06A13.97 13.97 0 1 0 16.04 2.003zm0 25.45a11.43 11.43 0 0 1-5.83-1.59l-.42-.25-4.16 1.22 1.25-4.05-.27-.42a11.45 11.45 0 1 1 9.43 5.09zm6.28-8.57c-.34-.17-2.03-1-2.35-1.12-.31-.12-.54-.17-.77.17-.23.34-.89 1.12-1.09 1.35-.2.23-.4.26-.74.09-.34-.17-1.45-.53-2.76-1.7a10.3 10.3 0 0 1-1.91-2.38c-.2-.34-.02-.52.15-.69.15-.15.34-.4.51-.6.17-.2.23-.34.34-.57.12-.23.06-.43-.03-.6-.09-.17-.77-1.86-1.06-2.55-.28-.67-.56-.58-.77-.59h-.66c-.23 0-.6.09-.91.43-.31.34-1.2 1.17-1.2 2.86s1.23 3.32 1.4 3.55c.17.23 2.42 3.7 5.87 5.19.82.35 1.46.57 1.96.73.82.26 1.57.22 2.16.13.66-.1 2.03-.83 2.32-1.63.29-.8.29-1.49.2-1.63-.08-.14-.31-.23-.65-.4z">
+            </path>
 
+        </svg>
+
+        <span class="whatsapp-tooltip">
+            Chat with us
+        </span>
+
+    </a>
 
 
     <script src="js/about.js"></script>
+
 
 </body>
 

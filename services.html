@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
@@ -9,22 +10,160 @@
         name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="description"
-        content="Explore Byramold Investments Ltd ventures in agriculture, poultry, technology, and marketing and business growth.">
+
+    <!-- ========================================
+         PRIMARY SEO
+         ======================================== -->
 
     <title>
-        What We Do | Byramold Investments Ltd
+        Our Ventures | Agriculture, Poultry & Technology | Byramold
     </title>
+
+    <meta
+        name="description"
+        content="Explore Byramold Investments Ltd ventures in Kenya across agriculture, sorghum production, poultry, technology, trade, and strategic business growth partnerships.">
+
+    <meta
+        name="robots"
+        content="index, follow, max-image-preview:large">
+
+    <meta
+        name="author"
+        content="Byramold Investments Ltd">
+
+    <link
+        rel="canonical"
+        href="https://byramoldinvestments.com/services.html">
+
+
+    <!-- ========================================
+         OPEN GRAPH / SOCIAL SHARING
+         ======================================== -->
+
+    <meta
+        property="og:type"
+        content="website">
+
+    <meta
+        property="og:site_name"
+        content="Byramold Investments Ltd">
+
+    <meta
+        property="og:title"
+        content="What We Do | Byramold Investments Ltd">
+
+    <meta
+        property="og:description"
+        content="Explore Byramold ventures across agriculture, poultry, technology and strategic business growth partnerships in Kenya.">
+
+    <meta
+        property="og:url"
+        content="https://byramoldinvestments.com/services.html">
+
+    <meta
+        property="og:image"
+        content="https://byramoldinvestments.com/images/Sorghum%20Image%207.jpeg">
+
+    <meta
+        property="og:image:alt"
+        content="Byramold Investments agricultural production operations in Kenya">
+
+    <meta
+        property="og:locale"
+        content="en_KE">
+
+
+    <!-- ========================================
+         X / TWITTER SHARING
+         ======================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image">
+
+    <meta
+        name="twitter:title"
+        content="What We Do | Byramold Investments Ltd">
+
+    <meta
+        name="twitter:description"
+        content="Agriculture, poultry, technology and strategic business ventures built for sustainable long-term value.">
+
+    <meta
+        name="twitter:image"
+        content="https://byramoldinvestments.com/images/Sorghum%20Image%207.jpeg">
+
+
+    <!-- ========================================
+         FAVICON
+         ======================================== -->
 
     <link
         rel="icon"
         type="image/png"
         href="images/Byramold_Logo-removebg-preview.png">
 
+
+    <!-- ========================================
+         STYLESHEET
+         ======================================== -->
+
     <link
         rel="stylesheet"
         href="css/services.css">
+
+
+    <!-- ========================================
+         STRUCTURED DATA
+         ======================================== -->
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "@id": "https://byramoldinvestments.com/#organization",
+                "name": "Byramold Investments Ltd",
+                "url": "https://byramoldinvestments.com/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://byramoldinvestments.com/images/Byramold_Logo-removebg-preview.png"
+                },
+                "description": "Byramold Investments Ltd is a Kenyan investment and holding company building and growing ventures through Ownership, Production and Trade.",
+                "email": "admin@byramoldinvestments.com",
+                "areaServed": {
+                    "@type": "Country",
+                    "name": "Kenya"
+                }
+            },
+            {
+                "@type": "WebSite",
+                "@id": "https://byramoldinvestments.com/#website",
+                "url": "https://byramoldinvestments.com/",
+                "name": "Byramold Investments Ltd",
+                "publisher": {
+                    "@id": "https://byramoldinvestments.com/#organization"
+                },
+                "inLanguage": "en-KE"
+            },
+            {
+                "@type": "CollectionPage",
+                "@id": "https://byramoldinvestments.com/services.html#webpage",
+                "url": "https://byramoldinvestments.com/services.html",
+                "name": "What We Do | Byramold Investments Ltd",
+                "isPartOf": {
+                    "@id": "https://byramoldinvestments.com/#website"
+                },
+                "about": {
+                    "@id": "https://byramoldinvestments.com/#organization"
+                },
+                "description": "Explore Byramold Investments Ltd ventures across agriculture, poultry, technology and strategic business growth partnerships.",
+                "inLanguage": "en-KE"
+            }
+        ]
+    }
+    </script>
 
 </head>
 
@@ -47,7 +186,8 @@
 
                 <a
                     href="index.html"
-                    class="logo">
+                    class="logo"
+                    aria-label="Byramold Investments Ltd home">
 
                     <span class="logo-main">
                         BYRAMOLD
@@ -64,6 +204,7 @@
 
                 <nav
                     class="main-nav"
+                    id="main-navigation"
                     aria-label="Main navigation">
 
                     <a href="index.html">
@@ -77,15 +218,17 @@
                     <a
                         href="services.html"
                         class="active">
+
                         What We Do
+
+                    </a>
+
+                    <a href="partners.html">
+                        Partners &amp; Investors
                     </a>
 
                     <a href="insight.html">
                         Insights
-                    </a>
-
-                    <a href="partners.html">
-                        Partners & Investors
                     </a>
 
                     <a href="contact.html">
@@ -100,7 +243,9 @@
                 <a
                     href="contact.html"
                     class="nav-cta">
+
                     Let's Talk
+
                 </a>
 
 
@@ -109,7 +254,8 @@
                 <button
                     class="menu-toggle"
                     aria-label="Open navigation menu"
-                    aria-expanded="false">
+                    aria-expanded="false"
+                    aria-controls="main-navigation">
 
                     <span></span>
                     <span></span>
@@ -164,7 +310,9 @@
                     <a
                         href="#ventures"
                         class="btn btn-primary">
+
                         Explore Our Ventures
+
                     </a>
 
                 </div>
@@ -276,8 +424,9 @@
 
                         <img
                             src="images/Sorghum Image 7.jpeg"
-                            alt="Byramold sorghum production"
-                            loading="lazy">
+                            alt="Byramold Investments commercial sorghum production in Kenya"
+                            loading="lazy"
+                            decoding="async">
 
                         <span class="venture-status">
                             Core Operating Venture
@@ -359,16 +508,11 @@
 
                     <div class="venture-image">
 
-                        <!--
-                            Replace poultry.jpg with an
-                            actual Byramold poultry or
-                            incubator photograph.
-                        -->
-
                         <img
                             src="images/poultry 1.jpg"
-                            alt="Byramold poultry and incubation venture"
-                            loading="lazy">
+                            alt="Byramold Investments poultry incubation and chick production venture"
+                            loading="lazy"
+                            decoding="async">
 
                         <span class="venture-status">
                             Operating Venture
@@ -451,7 +595,7 @@
                         </span>
 
                         <h3>
-                            Technology & Digital Solutions
+                            Technology &amp; Digital Solutions
                         </h3>
 
                         <p>
@@ -470,11 +614,17 @@
 
                         <div class="venture-card-tags">
 
-                            <span>Digital Solutions</span>
+                            <span>
+                                Digital Solutions
+                            </span>
 
-                            <span>Business Systems</span>
+                            <span>
+                                Business Systems
+                            </span>
 
-                            <span>Technology Ventures</span>
+                            <span>
+                                Technology Ventures
+                            </span>
 
                         </div>
 
@@ -491,7 +641,7 @@
                         </div>
 
                         <span class="section-label">
-                            Marketing & Business Growth
+                            Marketing &amp; Business Growth
                         </span>
 
                         <h3>
@@ -594,8 +744,13 @@
                         </p>
 
                         <a href="contact.html">
+
                             Discuss Your Land
-                            <span>→</span>
+
+                            <span aria-hidden="true">
+                                →
+                            </span>
+
                         </a>
 
                     </article>
@@ -622,8 +777,13 @@
                         </p>
 
                         <a href="contact.html">
+
                             Explore Partnership
-                            <span>→</span>
+
+                            <span aria-hidden="true">
+                                →
+                            </span>
+
                         </a>
 
                     </article>
@@ -650,8 +810,13 @@
                         </p>
 
                         <a href="contact.html">
+
                             Discuss Supply
-                            <span>→</span>
+
+                            <span aria-hidden="true">
+                                →
+                            </span>
+
                         </a>
 
                     </article>
@@ -679,8 +844,13 @@
                         </p>
 
                         <a href="contact.html">
+
                             Present an Opportunity
-                            <span>→</span>
+
+                            <span aria-hidden="true">
+                                →
+                            </span>
+
                         </a>
 
                     </article>
@@ -726,7 +896,9 @@
 
                     <div class="process-step">
 
-                        <span>01</span>
+                        <span>
+                            01
+                        </span>
 
                         <h3>
                             Identify
@@ -742,7 +914,9 @@
 
                     <div class="process-step">
 
-                        <span>02</span>
+                        <span>
+                            02
+                        </span>
 
                         <h3>
                             Evaluate
@@ -758,7 +932,9 @@
 
                     <div class="process-step">
 
-                        <span>03</span>
+                        <span>
+                            03
+                        </span>
 
                         <h3>
                             Structure
@@ -774,7 +950,9 @@
 
                     <div class="process-step">
 
-                        <span>04</span>
+                        <span>
+                            04
+                        </span>
 
                         <h3>
                             Build
@@ -790,7 +968,9 @@
 
                     <div class="process-step">
 
-                        <span>05</span>
+                        <span>
+                            05
+                        </span>
 
                         <h3>
                             Scale
@@ -845,13 +1025,17 @@
                         <a
                             href="contact.html"
                             class="btn btn-primary">
+
                             Discuss an Opportunity
+
                         </a>
 
                         <a
                             href="partners.html"
                             class="btn btn-outline-light">
+
                             Partner With Us
+
                         </a>
 
                     </div>
@@ -882,7 +1066,8 @@
 
                     <a
                         href="index.html"
-                        class="logo footer-logo">
+                        class="logo footer-logo"
+                        aria-label="Byramold Investments Ltd home">
 
                         <span class="logo-main">
                             BYRAMOLD
@@ -916,8 +1101,9 @@
                     </a>
 
                     <a href="partners.html">
-                        Partners & Investors
+                        Partners &amp; Investors
                     </a>
+
                     <a href="insight.html">
                         Insights
                     </a>
@@ -935,8 +1121,8 @@
                         Get In Touch
                     </h3>
 
-                    <a href="mailto:info@byramold.com">
-                        info@byramold.com
+                    <a href="mailto:admin@byramoldinvestments.com">
+                        admin@byramoldinvestments.com
                     </a>
 
                     <a href="contact.html">
@@ -1002,6 +1188,7 @@
 
 
     <script src="js/services.js"></script>
+
 
 </body>
 

@@ -33,6 +33,12 @@
     </url>
 
     <url>
+        <loc>https://byramoldinvestments.com/article.html?slug=building-stronger-agricultural-value-chains-through-partnership</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <url>
         <loc>https://byramoldinvestments.com/contact.html</loc>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
